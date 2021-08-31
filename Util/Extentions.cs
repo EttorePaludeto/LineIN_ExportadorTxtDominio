@@ -25,14 +25,21 @@ namespace LineIN_ExportadorDominio.Util
             foreach (PropertyInfo p in campos)
             {
 
-                var valor = p.GetValue(value);
+                string valor = p.GetValue(value).ToString();
+
+                //Tratar DataTypes
+                if (p.PropertyType.Name == "DateTime") valor = valor.FormatDate();
+             
 
                 txtReg = String.Concat(txtReg, valor.ToString(), Delimitador);
-
-
             }
 
             return txtReg;
+        }
+
+        public static string FormatDate(this object value)
+        {
+           return Convert.ToDateTime(value).ToString("dd/MM/yyyy");
         }
 
     }

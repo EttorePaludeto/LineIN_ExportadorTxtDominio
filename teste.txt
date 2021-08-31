@@ -1,0 +1,4 @@
+6000|X||||
+6100|31/08/2021|1000|2000|10458,58|101|Sou o Histórico do Contábil|Ettore|136|0|
+6000|X||||
+6100|31/08/2021|1000|2000|10458,58|101|Sou o Histórico do Contábil AAAAAAAAAAAA|Ettore|136|0|

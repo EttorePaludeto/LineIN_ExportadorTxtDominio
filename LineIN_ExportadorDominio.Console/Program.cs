@@ -12,6 +12,49 @@ namespace LineIN_ExportadorDominio
     {
         static void Main(string[] args)
         {
+            GerarTxtDominio<REG6100> g = new GerarTxtDominio<REG6100>();
+            g.Gerar(@"C:\Workspace\Desenvolvimento\LineIN_ExportadorTxtDominio\teste.txt", ListaReg6100());
+        }
+
+
+        static List<REG6100> ListaReg6100()
+        {
+            List<REG6100> list = new List<REG6100>();
+
+            REG6100 Reg6100 = new REG6100();
+
+            Reg6100.DataLacto = DateTime.Now;
+            Reg6100.DebitoId = 1000;
+            Reg6100.CreditoID = 2000;
+            Reg6100.Valor = 10458.58M;
+            Reg6100.CodHist = 101;
+            Reg6100.Histórico = "Sou o Histórico do Contábil";
+            Reg6100.Usuario = "Ettore";
+            Reg6100.CodFilial = 136;
+            Reg6100.SCP = 0;
+
+            REG6100 Reg6100a = new REG6100();
+
+            Reg6100a.DataLacto = DateTime.Now;
+            Reg6100a.DebitoId = 1000;
+            Reg6100a.CreditoID = 2000;
+            Reg6100a.Valor = 10458.58M;
+            Reg6100a.CodHist = 101;
+            Reg6100a.Histórico = "Sou o Histórico do Contábil AAAAAAAAAAAA";
+            Reg6100a.Usuario = "Ettore";
+            Reg6100a.CodFilial = 136;
+            Reg6100a.SCP = 0;
+
+            list.Add(Reg6100);
+            list.Add(Reg6100a);
+
+            return list;
+
+
+        }
+
+        static void TesteSerializaString()
+        {
             REG6000 Reg6000 = new REG6000();
 
             REG6100 Reg6100 = new REG6100();

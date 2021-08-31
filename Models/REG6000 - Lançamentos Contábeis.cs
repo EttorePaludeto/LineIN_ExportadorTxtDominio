@@ -1,6 +1,7 @@
 ﻿using LineIN_ExportadorDominio.Util;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -19,7 +20,26 @@ namespace LineIN_ExportadorDominio.Contabil
       
     }
 
-       public class REG6000
+    public class GerarTxtDominio<T> where T: IReg
+    {
+        public void Gerar(string path, List<T> list)
+        {
+            StreamWriter sw = new StreamWriter(path, false, Encoding.GetEncoding("ISO-8859-1"));
+
+            foreach (var item in list)
+            {
+                sw.WriteLine(item.Exportar());
+            }
+            sw.Close();
+        }
+    }
+
+    public interface IReg
+    {
+        string Exportar();
+    }
+
+       public class REG6000: IReg
     {
         [Ordem(1)]
         public string Reg => "6000";
@@ -31,14 +51,8 @@ namespace LineIN_ExportadorDominio.Contabil
         public string Localizador => "";
         [Ordem(5)]
         public string RTT => "";
-       
-        public IList<REG6100> Reg6100s { get; set; }
-
-        public REG6000()
-        {
-            Reg6100s = new List<REG6100>();
-        }
-
+      
+      
         public string Exportar()
         {
             return this.SerizalizarTxtDominio<REG6000>();         
@@ -46,8 +60,11 @@ namespace LineIN_ExportadorDominio.Contabil
 
     }
 
-    public class REG6100
+    public class REG6100: IReg
     {
+
+        [Ordem(0)]
+        public REG6000 Reg6000;
         [Ordem(1)]
         public string Reg => "6100";
         [Ordem(2)]
@@ -69,9 +86,16 @@ namespace LineIN_ExportadorDominio.Contabil
         [Ordem(10)]
         public int SCP { get; set; }
 
+        public REG6100()
+        {
+            Reg6000 = new REG6000();
+        }
+
         public string Exportar()
         {
-            return this.SerizalizarTxtDominio<REG6100>();
+            return String.Concat(this.Reg6000.Exportar(), 
+                                 Environment.NewLine, 
+                                 this.SerizalizarTxtDominio<REG6100>());
         }
 
     }
